@@ -33,13 +33,38 @@ void solve()
 {
     ll n;
     cin>>n;
-    vector<ll> a(n);
-    ll check = 0;
-    for(int i=0;i<n;i++)
+    vector<ll> a(n+1);
+    vector<vector<ll>> idx(n+2);
+    for(ll i=1;i<=n;i++)
     {
         cin>>a[i];
-        if(a[i]==i) check++;
-    } 
+        idx[a[i]].push_back(i);
+    }
+    vector<ll> ans;
+    ll l = 1;
+    while(l<=n)
+    {
+        ll mex = 0;
+        ll r = l;
+        while(mex<=(n+1))
+        {
+            auto it = lower_bound(all(idx[mex]), l);
+            if(it == idx[mex].end()) break;
+            
+            r = max(r, *it);
+            mex++;
+        }
+        ans.push_back(mex);
+        l = r+1;
+
+    }
+    
+    cout<<ans.size()<<endl;
+    for(ll i: ans)
+    {
+        cout<<i<<" ";
+    }
+    cout<<endl;
     
 }
 
